@@ -1,0 +1,73 @@
+version: '3' 
+
+services: 
+
+    jenkins: 
+
+        image: jenkins/jenkins  
+
+        ports: 
+
+            - 8085:8080 
+
+            - 50000:50000 
+
+        container_name: jenkins 
+
+        privileged: true 
+
+        user: root 
+
+        volumes: 
+
+            - ./home:/var/jenkins_home  
+
+        networks: 
+
+            - net 
+
+    sonar: 
+
+        image: sonarqube:10.4.1-community 
+
+        volumes: 
+
+          - sonarqube_data:/opt/sonarqube/data 
+
+          - sonarqube_logs:/opt/sonarqube/logs 
+
+          - sonarqube_extensions:/opt/sonarqube/extensions 
+
+        environment: 
+
+          - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true 
+
+        ports: 
+
+          - 9000:9000 
+
+        networks: 
+
+          - net 
+
+         
+
+networks: 
+
+    net: 
+
+  
+
+volumes: 
+
+  sonarqube_data: 
+
+    external: false 
+
+  sonarqube_logs: 
+
+    external: false 
+
+  sonarqube_extensions: 
+
+    external: false 
